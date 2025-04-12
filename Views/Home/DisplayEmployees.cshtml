@@ -1,0 +1,39 @@
+@using System.Data
+@model DataTable
+
+<div>
+    <table class="table table-bordered table-striped text-center">
+        <thead class="thead-light">
+            <tr>
+                <th>Employee ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Manager</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.Rows)
+            {
+                <tr>
+                    <td>@row["EmployeeId"]</td>
+                    <td>@row["FirstName"]</td>
+                    <td>@row["LastName"]</td>
+                    <td>@row["Email"]</td>
+                    <td>@row["Role"]</td>
+                    <td>@row["DepartmentName"]</td>
+                    <td>@row["ManagerName"]</td>
+                    <td>
+                        <button class="btn btn-primary"
+                            onclick="location.href='@Url.Action("EditEmployee", "Home", new { id = row["EmployeeId"] })'">Edit</button>
+                        <button class="btn btn-danger"
+                            onclick="location.href='@Url.Action("DeleteEmployee", "Home", new { id = row["EmployeeId"] })'">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

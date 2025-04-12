@@ -1,0 +1,67 @@
+@using System.Data
+@model DataTable
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execute Query</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TeamTrack.styles.css" asp-append-version="true" />
+    <style>
+        h2 {
+            color: #2a9d8f;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Execute SQL Query</h2>
+        <form asp-controller="Home" asp-action="ExecuteQuery" method="post" class="mb-4">
+            <div class="mb-3">
+                <label for="query" class="form-label">SQL Query:</label>
+                <textarea id="query" name="query" rows="5" class="form-control"
+                    placeholder="Enter your SQL query here"></textarea>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">Execute</button>
+                <button type="button" class="btn btn-secondary"
+                    onclick="location.href='@Url.Action("Index")'">Cancel</button>
+            </div>
+        </form>
+
+        @if (ViewBag.QueryResult != null)
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            @foreach (DataColumn column in ViewBag.QueryResult.Columns)
+                            {
+                                <th>@column.ColumnName</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in ViewBag.QueryResult.Rows)
+                        {
+                            <tr>
+                                @foreach (var column in ViewBag.QueryResult.Columns)
+                                {
+                                    <td>@row[column]</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

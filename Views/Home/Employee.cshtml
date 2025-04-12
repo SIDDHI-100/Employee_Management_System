@@ -1,0 +1,66 @@
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    body {
+        /* Light gray background */
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+
+
+    h1 {
+        color: #2a9d8f;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .section-box {
+        background-color: #e9ecef;
+        /* Light gray background for sections */
+        padding: 20px;
+        border: 2px solid #2a9d8f;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .section-box h2 {
+        color: #2a9d8f;
+        margin-bottom: 10px;
+    }
+
+    .section-box p {
+        color: #333;
+    }
+
+
+    .nav-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+
+
+<div class="container">
+    <h1>Welcome to the Employee Section</h1>
+
+    <div class="section-box">
+        <h2>Employee Management</h2>
+        <p>Manage your employees efficiently.</p>
+
+        <div class="d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AddEmployee">Add Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="DisplayEmployees">Employee
+                        Details</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

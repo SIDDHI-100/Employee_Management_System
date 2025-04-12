@@ -1,0 +1,170 @@
+@model System.Data.DataRow
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Employee</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TeamTrack.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background-color: #bfdbfe;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: white;
+            border: 5px solid #2a9d8f;
+            margin-top: 80px;
+            margin-bottom: 60px;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            display: block;
+            color: black;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-container input,
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #2a9d8f;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .form-container button {
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .form-container .btn-primary {
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+        }
+
+        .form-container .btn-secondary {
+            background-color: gray;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Edit Employee</h2>
+        <form asp-action="EditEmployee" method="post">
+            <input type="hidden" name="employeeId" value="@Model["EmployeeId"]" />
+
+            <div>
+                <label>First Name:</label>
+                <input type="text" name="firstName" value="@Model["FirstName"]" required />
+            </div>
+
+            <div>
+                <label>Last Name:</label>
+                <input type="text" name="lastName" value="@Model["LastName"]" required />
+            </div>
+
+            <div>
+                <label>Email:</label>
+                <input type="email" name="email" value="@Model["Email"]" required />
+            </div>
+
+            <div>
+                <label>Role:</label>
+                <input type="text" name="role" value="@Model["Role"]" required />
+            </div>
+
+
+
+
+            <div>
+                <label>Departments:</label>
+                <select name="departmentIds" multiple class="form-control">
+                    @if (ViewBag.Departments != null)
+                    {
+                        @foreach (System.Data.DataRow row in ViewBag.Departments.Rows)
+                        {
+                            // Determine if the current department should be selected
+                            bool isSelected = Model["DepartmentIds"] != null &&
+                            Model["DepartmentIds"].ToString().Split(',').Contains(row["DepartmentId"].ToString());
+
+                            if (isSelected)
+                            {
+                                <option value="@row["DepartmentId"]" selected="selected">
+                                    @row["DepartmentName"]
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@row["DepartmentId"]">
+                                    @row["DepartmentName"]
+                                </option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+
+            <div>
+                <label>Managers:</label>
+                <select name="managerIds" multiple class="form-control">
+                    @if (ViewBag.Managers != null)
+                    {
+                        @foreach (System.Data.DataRow row in ViewBag.Managers.Rows)
+                        {
+                            // Determine if the current manager should be selected
+                            bool isSelected = Model["ManagerIds"] != null &&
+                            Model["ManagerIds"].ToString().Split(',').Contains(row["EmployeeId"].ToString());
+
+                            if (isSelected)
+                            {
+                                <option value="@row["EmployeeId"]" selected="selected">
+                                    @row["FullName"]
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@row["EmployeeId"]">
+                                    @row["FullName"]
+                                </option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+
+
+            <div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="button" class="btn btn-secondary"
+                    onclick="location.href='@Url.Action("Employee")'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+﻿@model TeamTrack.Models.Employee
+
+<form asp-action="InsertData" method="post">
+	<label>First Name:</label>
+	<input asp-for="FirstName" />
+	<label>Last Name:</label>
+	<input asp-for="LastName" />
+	<label>Email:</label>
+	<input asp-for="Email" />
+
+	<label>Role:</label>
+	<input asp-for="Role" />
+
+	<label>Department:</label>
+	<select asp-for="DepartmentId" asp-items="ViewBag.Departments"></select>
+
+	<label>Manager:</label>
+	<select asp-for="ManagerId" asp-items="ViewBag.Managers"></select>
+
+	<button type="submit">Add Employee</button>
+</form>

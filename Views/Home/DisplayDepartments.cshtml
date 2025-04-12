@@ -1,0 +1,27 @@
+@using System.Data
+@model DataTable
+<div>
+    <table border="1" class="table table-bordered table-striped text-center">
+        <thead class="thead-light">
+            <tr>
+                <th>Department ID</th>
+                <th>Department Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.Rows)
+            {
+                <tr>
+                    <td>@row["DepartmentId"]</td>
+                    <td>@row["DepartmentName"]</td>
+                    <td>
+                        <button class="btn btn-primary"
+                            onclick="location.href='@Url.Action("EditDepartment", "Home", new { id = row["DepartmentId"] })'">Edit</button>
+                        <button class="btn btn-danger"
+                            onclick="location.href='@Url.Action("DeleteDepartment", "Home", new { id = row["DepartmentId"] })'">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

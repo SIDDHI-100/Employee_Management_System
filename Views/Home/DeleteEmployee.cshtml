@@ -1,0 +1,27 @@
+@model TeamTrack.Models.Employee
+
+
+<h2>Delete Employee</h2>
+
+<div>
+    <h4>Are you sure you want to delete this employee?</h4>
+    <div>
+        <h5>@Model.FirstName @Model.LastName</h5>
+        <p>Email: @Model.Email</p>
+        <p>Role: @Model.Role</p>
+        @if (!string.IsNullOrEmpty(Model.DepartmentId))
+        {
+            <p>Department ID: @Model.DepartmentId</p>
+        }
+        @if (!string.IsNullOrEmpty(Model.ManagerId))
+        {
+            <p>Manager ID: @Model.ManagerId</p>
+        }
+    </div>
+    <form asp-action="DeleteEmployeeConfirmed" method="post">
+        <input type="hidden" name="employeeId" value="@Model.EmployeeId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary"
+            onclick="location.href='@Url.Action("DisplayEmployees")'">Cancel</button>
+    </form>
+</div>

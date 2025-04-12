@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Department</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TeamTrack.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            margin: auto;
+        }
+
+        .form-container {
+            background-color: #2a9d8f;
+            border: 5px solid #2a9d8f;
+            padding: 24px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin-left: 350px;
+            width: 100%;
+        }
+
+        .form-container label {
+            display: block;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #2a9d8f;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .form-container button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-container .btn-primary {
+            background-color: white;
+            color: #2a9d8f;
+            border: none;
+        }
+
+        .form-container .btn-secondary {
+            background-color: gray;
+            color: white;
+            border: none;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Add Department</h2>
+        <form asp-action="AddDepartment" method="post">
+            <div>
+                <label>Department Name:</label>
+                <input type="text" name="departmentName" required />
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Add Department</button>
+                <button type="button" class="btn btn-secondary"
+                    onclick="location.href='@Url.Action("Department")'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+﻿@using System.Data
+@model DataTable
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add Employee</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/TeamTrack.styles.css" asp-append-version="true" />
+	<style>
+		body {
+			background-color: #bfdbfe;
+			height: 100vh;
+		}
+
+		.form-container {
+			background-color: white;
+			border: 5px solid #2a9d8f;
+			margin-top: 80px;
+			margin-bottom: 60px;
+			padding: 20px;
+			border-radius: 8px;
+			max-width: 600px;
+			width: 100%;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		.form-container h2 {
+			color: black;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		.form-container label {
+			display: block;
+			color: black;
+			margin-bottom: 8px;
+			font-weight: bold;
+		}
+
+		.form-container input,
+		.form-container select {
+			width: 100%;
+			padding: 10px;
+			border: 2px solid #2a9d8f;
+			border-radius: 4px;
+			margin-bottom: 16px;
+		}
+
+		.form-container button {
+			padding: 10px 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			width: 100%;
+			margin-bottom: 10px;
+		}
+
+		.form-container .btn-primary {
+			background-color: #2a9d8f;
+			color: white;
+			border: none;
+		}
+
+		.form-container .btn-secondary {
+			background-color: gray;
+			color: white;
+			border: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="form-container">
+		<h2>Add Employee</h2>
+		<form asp-action="AddEmployee" method="post">
+			<div style="display: flex;flex-direction:row; gap: 20px;">
+				<div>
+					<label>First Name:</label>
+					<input type="text" name="firstName" required />
+				</div>
+				<div>
+					<label>Last Name:</label>
+					<input type="text" name="lastName" required />
+				</div>
+			</div>
+			<div>
+				<label>Email:</label>
+				<input type="email" name="email" required />
+			</div>
+			<div>
+				<label>Role:</label>
+				<input type="text" name="role" required />
+			</div>
+			<div>
+				<label>Departments:</label>
+				<select name="departmentIds" multiple class="form-control">
+					@if (ViewBag.Departments != null)
+					{
+						foreach (DataRow row in ViewBag.Departments.Rows)
+						{
+							if (row.Table.Columns.Contains("DepartmentId") && row.Table.Columns.Contains("DepartmentName"))
+							{
+								<option value="@row["DepartmentId"]">@row["DepartmentName"]</option>
+							}
+						}
+					}
+				</select>
+			</div>
+
+			<div>
+				<label>Managers:</label>
+				<select name="managerIds" multiple class="form-control">
+					@if (ViewBag.Managers != null)
+					{
+						foreach (DataRow row in ViewBag.Managers.Rows)
+						{
+							if (row.Table.Columns.Contains("EmployeeId") && row.Table.Columns.Contains("FullName"))
+							{
+								<option value="@row["EmployeeId"]">@row["FullName"]</option>
+							}
+						}
+					}
+				</select>
+			</div>
+			<div>
+				<button type="submit" class="btn btn-primary">Add Employee</button>
+				<button type="button" class="btn btn-secondary"
+					onclick="location.href='@Url.Action("Employee")'">Cancel</button>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+@model System.Data.DataRow
+
+<h2>Edit Department</h2>
+
+<form asp-action="EditDepartment" method="post">
+    <input type="hidden" name="departmentId" value="@Model["DepartmentId"]" />
+
+    <label>Department Name:</label>
+    <input type="text" name="departmentName" value="@Model["DepartmentName"]" required />
+
+    <button type="submit">Save Changes</button>
+    <button type="button" class="btn btn-secondary"
+        onclick="location.href='@Url.Action("DisplayDepartments")'">Cancel</button>
+</form>
