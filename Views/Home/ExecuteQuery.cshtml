@@ -9,13 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Execute Query</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TeamTrack.styles.css" asp-append-version="true" />
-    <style>
-        h2 {
-            color: #2a9d8f;
-        }
-    </style>
 </head>
 
 <body class="bg-light">
@@ -33,6 +26,11 @@
                     onclick="location.href='@Url.Action("Index")'">Cancel</button>
             </div>
         </form>
+
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
 
         @if (ViewBag.QueryResult != null)
         {

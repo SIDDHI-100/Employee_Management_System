@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "T/1derAFpyeny6eGMDt8crHOjYLqWVL1ETa6audPick=",
+  "Hash": "MVWRL00SiPAsmKoHU8JWNlpWh9a1kntflaNyUfR84uA=",
   "Source": "Employee_Management_System",
   "BasePath": "_content/Employee_Management_System",
   "Mode": "Default",
@@ -808,8 +808,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "l2av4jpuoj",
-      "Integrity": "vQTf4d3WJi9vmWQNA4kJnjoedgEhMFXFDEMXqtHtgzk=",
+      "Fingerprint": "fiwqutj8wm",
+      "Integrity": "6Ta/E7RIv3KZ89Pna1lR2KZhqh1AU9qsWK/1dtOBAVM=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
@@ -4355,6 +4355,51 @@
       ]
     },
     {
+      "Route": "lib/bootstrap/dist/js/bootstrap.bundle.fiwqutj8wm.js",
+      "AssetFile": "C:\\Users\\sp115304\\OneDrive - Zensar Technologies Ltd\\Desktop\\Team_Projects\\Employee_Management_System_Copy\\Employee_Management_System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "208431"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6Ta/E7RIv3KZ89Pna1lR2KZhqh1AU9qsWK/1dtOBAVM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 17:38:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "fiwqutj8wm"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/dist/js/bootstrap.bundle.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6Ta/E7RIv3KZ89Pna1lR2KZhqh1AU9qsWK/1dtOBAVM="
+        }
+      ]
+    },
+    {
       "Route": "lib/bootstrap/dist/js/bootstrap.bundle.js",
       "AssetFile": "C:\\Users\\sp115304\\OneDrive - Zensar Technologies Ltd\\Desktop\\Team_Projects\\Employee_Management_System_Copy\\Employee_Management_System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "Selectors": [],
@@ -4365,7 +4410,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "208492"
+          "Value": "208431"
         },
         {
           "Name": "Content-Type",
@@ -4373,11 +4418,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"vQTf4d3WJi9vmWQNA4kJnjoedgEhMFXFDEMXqtHtgzk=\""
+          "Value": "\"6Ta/E7RIv3KZ89Pna1lR2KZhqh1AU9qsWK/1dtOBAVM=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 31 Mar 2025 16:33:59 GMT"
+          "Value": "Sat, 12 Apr 2025 17:38:40 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4387,7 +4432,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-vQTf4d3WJi9vmWQNA4kJnjoedgEhMFXFDEMXqtHtgzk="
+          "Value": "sha256-6Ta/E7RIv3KZ89Pna1lR2KZhqh1AU9qsWK/1dtOBAVM="
         }
       ]
     },
@@ -4470,51 +4515,6 @@
         {
           "Name": "integrity",
           "Value": "sha256-gO4uhxfGuK0ONjRlHuwfghGfEXT5azm1oHWnTEFGTfk="
-        }
-      ]
-    },
-    {
-      "Route": "lib/bootstrap/dist/js/bootstrap.bundle.l2av4jpuoj.js",
-      "AssetFile": "C:\\Users\\sp115304\\OneDrive - Zensar Technologies Ltd\\Desktop\\Team_Projects\\Employee_Management_System_Copy\\Employee_Management_System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "208492"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"vQTf4d3WJi9vmWQNA4kJnjoedgEhMFXFDEMXqtHtgzk=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 31 Mar 2025 16:33:59 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "l2av4jpuoj"
-        },
-        {
-          "Name": "label",
-          "Value": "lib/bootstrap/dist/js/bootstrap.bundle.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-vQTf4d3WJi9vmWQNA4kJnjoedgEhMFXFDEMXqtHtgzk="
         }
       ]
     },

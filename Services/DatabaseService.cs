@@ -124,7 +124,6 @@ namespace TeamTrack.Services
 
             int nextNumber = 1;
 
-            System.Console.WriteLine("Hello World!");
             using (var connection = new SqlConnection(_connectionString))
             using (var command = new SqlCommand(query, connection))
             {
@@ -132,25 +131,21 @@ namespace TeamTrack.Services
                 {
                     connection.Open();
                     var result = command.ExecuteScalar();
-                    Console.WriteLine($"Res {result}");
 
                     if (result != DBNull.Value && result != null)
                     {
                         // Extract the numeric part of the ID and increment it
                         string lastId = result.ToString();
 
-                        Console.WriteLine("LastId", lastId);
 
                         string numericPart = lastId.Substring(initials.Length); // Skip the initials
 
-                        Console.WriteLine(numericPart);
 
                         if (int.TryParse(numericPart, out int currentNumber))
                         {
                             nextNumber = currentNumber + 1;
                         }
 
-                        Console.WriteLine(nextNumber);
                     }
                 }
                 catch (Exception ex)
@@ -159,13 +154,35 @@ namespace TeamTrack.Services
                 }
             }
 
-            Console.WriteLine($"{initials}{nextNumber:D3}");
 
             // Append the next number (formatted as a 3-digit number) to the initials
             return $"{initials}{nextNumber:D3}";
         }
 
-     
+        public DataTable ExecuteQuery(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+                throw new ArgumentException("Query cannot be null or empty.", nameof(query));
+
+            var dataTable = new DataTable();
+
+            using (var connection = new SqlConnection(_connectionString))
+            using (var command = new SqlCommand(query, connection))
+            using (var adapter = new SqlDataAdapter(command))
+            {
+                try
+                {
+                    connection.Open();
+                    adapter.Fill(dataTable);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error executing query.", ex);
+                }
+            }
+
+            return dataTable;
+        }
 
 
     }

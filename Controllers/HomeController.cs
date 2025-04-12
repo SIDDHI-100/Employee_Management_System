@@ -32,6 +32,33 @@ namespace TeamTrack.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult ExecuteQuery(string query)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    ViewBag.ErrorMessage = "Query cannot be empty.";
+                    return View();
+                }
+
+                // Execute the query and get the result as a DataTable
+                var result = _dbService.ExecuteQuery(query);
+
+                // Pass the result to the view
+                ViewBag.QueryResult = result;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Handle errors and display an error message
+                ViewBag.ErrorMessage = $"Error executing query: {ex.Message}";
+                return View();
+            }
+        }
+
+        
         public IActionResult AddEmployee()
         {
             // Fetch departments and managers from the database
@@ -253,12 +280,49 @@ FROM Employee e";
         }
 
         [HttpPost]
+        [HttpPost]
         public IActionResult EditDepartment(string departmentId, string departmentName)
         {
-            var query = $"UPDATE Department SET DepartmentName = '{departmentName}' WHERE DepartmentId = '{departmentId}'";
-            _dbService.InsertData(query);
+            try
+            {
+                // Validate input
+                if (string.IsNullOrEmpty(departmentId) || string.IsNullOrEmpty(departmentName))
+                {
+                    return BadRequest("All fields are required.");
+                }
 
-            return RedirectToAction("DisplayDepartments");
+                // Extract the numeric part of the DepartmentId
+                var numericPart = new string(departmentId.SkipWhile(c => !char.IsDigit(c)).ToArray());
+
+                // Generate the new prefix using the updated department name
+                var newPrefix = departmentName.Substring(0, 2).ToUpper();
+
+                // Combine the new prefix with the numeric part
+                var newDepartmentId = $"{newPrefix}{numericPart}";
+
+                // Update the Department table with the new ID and name
+                var updateDepartmentQuery = $@"
+        UPDATE Department 
+        SET DepartmentId = '{newDepartmentId}', DepartmentName = '{departmentName}' 
+        WHERE DepartmentId = '{departmentId}'";
+
+                _dbService.InsertData(updateDepartmentQuery);
+
+                // Update the EmployeeDepartment table to reflect the new DepartmentId
+                var updateEmployeeDepartmentQuery = $@"
+        UPDATE EmployeeDepartment 
+        SET DepartmentId = '{newDepartmentId}' 
+        WHERE DepartmentId = '{departmentId}'";
+
+                _dbService.InsertData(updateEmployeeDepartmentQuery);
+
+                return RedirectToAction("DisplayDepartments");
+            }
+            catch (Exception ex)
+            {
+                // Log the error and return an error view if needed
+                return BadRequest($"Error updating department: {ex.Message}");
+            }
         }
 
 
@@ -298,7 +362,7 @@ GROUP BY e.EmployeeId, e.FirstName, e.LastName, e.Email, e.Role";
         [HttpPost]
 
 
-
+        [HttpPost]
         public IActionResult EditEmployee(string employeeId, string firstName, string lastName, string email, string role, string[] departmentIds, string[] managerIds)
         {
             try
@@ -309,10 +373,19 @@ GROUP BY e.EmployeeId, e.FirstName, e.LastName, e.Email, e.Role";
                     return BadRequest("All fields are required.");
                 }
 
-                // Update the Employee table
+                // Extract the numeric part of the EmployeeId
+                var numericPart = new string(employeeId.SkipWhile(c => !char.IsDigit(c)).ToArray());
+
+                // Generate the new prefix using the updated first and last name
+                var newPrefix = $"{firstName[0]}{lastName[0]}".ToUpper();
+
+                // Combine the new prefix with the numeric part
+                var newEmployeeId = $"{newPrefix}{numericPart}";
+
+                // Update the Employee table with the new ID and details
                 var updateEmployeeQuery = $@"
         UPDATE Employee 
-        SET FirstName = '{firstName}', LastName = '{lastName}', Email = '{email}', Role = '{role}' 
+        SET EmployeeId = '{newEmployeeId}', FirstName = '{firstName}', LastName = '{lastName}', Email = '{email}', Role = '{role}' 
         WHERE EmployeeId = '{employeeId}'";
 
                 _dbService.InsertData(updateEmployeeQuery);
@@ -329,7 +402,7 @@ GROUP BY e.EmployeeId, e.FirstName, e.LastName, e.Email, e.Role";
                     {
                         var insertEmployeeDepartmentQuery = $@"
                 INSERT INTO EmployeeDepartment (EmployeeId, DepartmentId) 
-                VALUES ('{employeeId}', '{departmentId}')";
+                VALUES ('{newEmployeeId}', '{departmentId}')";
                         _dbService.InsertData(insertEmployeeDepartmentQuery);
                     }
                 }
@@ -346,7 +419,7 @@ GROUP BY e.EmployeeId, e.FirstName, e.LastName, e.Email, e.Role";
                     {
                         var insertManagerQuery = $@"
                 INSERT INTO Manager (EmployeeId, ManagerId) 
-                VALUES ('{employeeId}', '{managerId}')";
+                VALUES ('{newEmployeeId}', '{managerId}')";
                         _dbService.InsertData(insertManagerQuery);
                     }
                 }
