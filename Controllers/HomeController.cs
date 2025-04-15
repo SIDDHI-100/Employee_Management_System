@@ -13,6 +13,7 @@ namespace TeamTrack.Controllers
         public HomeController(DatabaseService dbService)
         {
             _dbService = dbService;
+
         }
 
         public IActionResult Index()
@@ -58,7 +59,7 @@ namespace TeamTrack.Controllers
             }
         }
 
-        
+
         public IActionResult AddEmployee()
         {
             // Fetch departments and managers from the database
@@ -131,12 +132,11 @@ namespace TeamTrack.Controllers
 
             var employee = new Employee
             {
-                EmployeeId = employeeTable.Rows[0]["EmployeeId"].ToString(),
-                FirstName = employeeTable.Rows[0]["FirstName"].ToString(),
-                LastName = employeeTable.Rows[0]["LastName"].ToString(),
-                Email = employeeTable.Rows[0]["Email"].ToString(),
-                Role = employeeTable.Rows[0]["Role"].ToString(),
-
+                EmployeeId = employeeTable.Rows[0]["EmployeeId"]?.ToString() ?? string.Empty,
+                FirstName = employeeTable.Rows[0]["FirstName"]?.ToString() ?? string.Empty,
+                LastName = employeeTable.Rows[0]["LastName"]?.ToString() ?? string.Empty,
+                Email = employeeTable.Rows[0]["Email"]?.ToString() ?? string.Empty,
+                Role = employeeTable.Rows[0]["Role"]?.ToString() ?? string.Empty,
             };
 
             return View(employee);

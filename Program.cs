@@ -1,3 +1,4 @@
+using TeamTrack.Services;
 namespace TeamTrack
 {
     public class Program
@@ -7,7 +8,10 @@ namespace TeamTrack
             var builder = WebApplication.CreateBuilder(args);
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddSingleton(new TeamTrack.Services.DatabaseService(connectionString));
+
+            // Use the Singleton instance of DatabaseService
+            builder.Services.AddSingleton(_ => DatabaseService.GetInstance(connectionString));
+
             builder.Services.AddControllersWithViews();
             var app = builder.Build();
 
@@ -15,7 +19,6 @@ namespace TeamTrack
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

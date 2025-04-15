@@ -1,16 +1,34 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
-
+using Microsoft.Data.SqlClient;
 namespace TeamTrack.Services
 {
     public class DatabaseService
     {
+        private static DatabaseService _instance; // Singleton instance
+        private static readonly object _lock = new object(); // Lock for thread safety
         private readonly string _connectionString;
 
-        public DatabaseService(string ConnectionString)
+        // Private constructor to prevent instantiation
+        private DatabaseService(string connectionString)
         {
-            _connectionString = ConnectionString ?? throw new ArgumentNullException(nameof(ConnectionString));
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+        }
+
+        // Public static method to get the singleton instance
+        public static DatabaseService GetInstance(string connectionString)
+        {
+            if (_instance == null)
+            {
+                lock (_lock) // Ensure thread safety
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new DatabaseService(connectionString);
+                    }
+                }
+            }
+            return _instance;
         }
 
         /// <summary>
@@ -63,18 +81,13 @@ namespace TeamTrack.Services
 
         /// <summary>
         /// Generates a unique Employee ID using a stored procedure.
-        /// </summary>newwww
-        /// 
-
+        /// </summary>
         public string GenerateEmployeeId(string firstName, string lastName)
         {
             if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
                 throw new ArgumentException("First name and last name cannot be null or empty.");
 
-            // Generate initials based on the first letter of the first name and last name
             string initials = $"{firstName[0]}{lastName[0]}".ToUpper();
-
-            // Query to get the last inserted EmployeeId with the same initials
             string query = $"SELECT TOP 1 EmployeeId FROM Employee ORDER BY EmployeeId DESC";
 
             int nextNumber = 1;
@@ -88,9 +101,8 @@ namespace TeamTrack.Services
                     var result = command.ExecuteScalar();
                     if (result != DBNull.Value && result != null)
                     {
-                        // Extract the numeric part of the ID and increment it
                         string lastId = result.ToString();
-                        string numericPart = lastId.Substring(initials.Length); // Skip the initials
+                        string numericPart = lastId.Substring(initials.Length);
                         if (int.TryParse(numericPart, out int currentNumber))
                         {
                             nextNumber = currentNumber + 1;
@@ -103,23 +115,18 @@ namespace TeamTrack.Services
                 }
             }
 
-            // Append the next number (formatted as a 3-digit number) to the initials
             return $"{initials}{nextNumber:D3}";
         }
-
-
 
         public string GenerateDepartmentId(string deptName)
         {
             if (string.IsNullOrWhiteSpace(deptName))
                 throw new ArgumentException("Department name cannot be null or empty.", nameof(deptName));
 
-            // Generate initials based on the first two letters of the department name
             string initials = deptName.Length >= 2
                 ? $"{deptName[0]}{deptName[1]}".ToUpper()
                 : $"{deptName[0]}X".ToUpper();
 
-            // Query to get the last inserted DepartmentId with the same initials
             string query = $"SELECT TOP 1 DepartmentId FROM Department ORDER BY DepartmentId DESC";
 
             int nextNumber = 1;
@@ -134,18 +141,13 @@ namespace TeamTrack.Services
 
                     if (result != DBNull.Value && result != null)
                     {
-                        // Extract the numeric part of the ID and increment it
                         string lastId = result.ToString();
-
-
-                        string numericPart = lastId.Substring(initials.Length); // Skip the initials
-
+                        string numericPart = lastId.Substring(initials.Length);
 
                         if (int.TryParse(numericPart, out int currentNumber))
                         {
                             nextNumber = currentNumber + 1;
                         }
-
                     }
                 }
                 catch (Exception ex)
@@ -154,8 +156,6 @@ namespace TeamTrack.Services
                 }
             }
 
-
-            // Append the next number (formatted as a 3-digit number) to the initials
             return $"{initials}{nextNumber:D3}";
         }
 
@@ -183,7 +183,5 @@ namespace TeamTrack.Services
 
             return dataTable;
         }
-
-
     }
 }
